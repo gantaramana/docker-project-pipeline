@@ -110,7 +110,7 @@ pipeline {
         }
         stage ("Deploy") {
             steps {
-                sh 'docker run -d --name zomato -p 3000:3000 shaikmustafa/loki:mydockerimage'
+                sh 'docker run -d --name zomato -p 3000:3000 image1'
             }
         }
     }
