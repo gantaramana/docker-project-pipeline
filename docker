@@ -52,7 +52,7 @@ pipeline {
         nodejs 'node16'
     }
     environment {
-        SCANNER_HOME=tool 'mysonar'
+        SCANNER_HOME=tool 'sonar-scanner'
     }
     stages {
         stage ("Clean") {
@@ -102,19 +102,10 @@ pipeline {
                 sh 'docker build -t image1 .'
             }
         }
-        stage("Docker Build & Push"){
-            steps{
-                script{
-                    withDockerRegistry(credentialsId: 'docker-password') {
-                        sh "docker tag image1 shaikmustafa/loki:mydockerimage"
-                        sh "docker push shaikmustafa/loki:mydockerimage"
-                    }
-                }
-            }
-        }
+      
         stage ("Scan image") {
             steps {
-                sh 'trivy image shaikmustafa/loki:mydockerimage'
+                sh 'trivy image image1'
             }
         }
         stage ("Deploy") {
